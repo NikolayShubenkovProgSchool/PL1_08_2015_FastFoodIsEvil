@@ -428,6 +428,7 @@
 				4F021F631B89933200DAD3EA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4F021F641B89933200DAD3EA /* Build configuration list for PBXNativeTarget "FastFoodIsEvilTests" */ = {
 			isa = XCConfigurationList;
@@ -436,6 +437,7 @@
 				4F021F661B89933200DAD3EA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
