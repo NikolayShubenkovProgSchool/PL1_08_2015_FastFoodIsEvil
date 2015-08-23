@@ -174,6 +174,11 @@ typedef NS_ENUM(NSInteger, PL1ThrowObjectType) {
                                          }];
                     }
                     break;
+                    case PL1ThrowObjectTypeShake:{
+                        [self.nodeToThrow runAction:[SKAction removeFromParent] completion:^{
+                            
+                        }];
+                    }
                         
                     default:
                         break;
@@ -274,8 +279,8 @@ typedef NS_ENUM(NSInteger, PL1ThrowObjectType) {
 - (SKNode *)nextObjectToThrow
 {
     SKNode *meatBall = nil;
-//    meatBall =  [self childNodeWithName:@"meatball"];
-//    self.throwType = PL1ThrowObjectTypeMeatBall;
+    meatBall =  [self childNodeWithName:@"meatball"];
+    self.throwType = PL1ThrowObjectTypeMeatBall;
 
     if (!meatBall){
         meatBall = [self childNodeWithName:@"shake"];
