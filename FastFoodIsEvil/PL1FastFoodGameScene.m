@@ -7,18 +7,21 @@
 //
 
 #import "PL1FastFoodGameScene.h"
+#import "SKAction+SoundFilePlay.h"
 
 typedef NS_ENUM(NSInteger, PL1FastFoodGameState) {
     PL1FastFoodGameStateInitial,
     PL1FastFoodGameStateReadyToThrow,
     PL1FastFoodGameStateDragging,
+    PL1FastFoodGameStateThrowing,
     PL1FastFoodGameStateWaitingForRest,//дождемся, когда состояние нода перейдет в состояние покоя
     PL1FastFoodGameStateRemovingLastThrownObject
 };
 
 typedef NS_ENUM(NSInteger, PL1ThrowObjectType) {
     PL1ThrowObjectTypeNothing,
-    PL1ThrowObjectTypeMeatBall
+    PL1ThrowObjectTypeMeatBall,
+    PL1ThrowObjectTypeShake
 };
 
 @interface PL1FastFoodGameScene ()
@@ -42,11 +45,12 @@ typedef NS_ENUM(NSInteger, PL1ThrowObjectType) {
     if (self.didInitContent == NO){
         [self initContent];
     }
+    [SKAction pl1_playSoundFileNamed:@"Aqua Teen Hunger Force.mp3"  atVolume:1
+                   waitForCompletion:YES];
 }
 
 - (void)initContent
 {
-
     SKSpriteNode *aNode = (SKSpriteNode *) [self childNodeWithName:@"background"];
     
     SKPhysicsBody *border = [SKPhysicsBody bodyWithEdgeLoopFromRect:CGRectMake(0, 0, aNode.size.width, aNode.size.height)];
@@ -54,6 +58,8 @@ typedef NS_ENUM(NSInteger, PL1ThrowObjectType) {
     border.linearDamping  = 0;
     border.angularDamping = 0;
     border.restitution    = 1;
+    
+//    self.physicsWorld.g
     
     aNode.physicsBody = border;
     [self runAction:[SKAction waitForDuration:1] completion:^{
@@ -84,17 +90,26 @@ typedef NS_ENUM(NSInteger, PL1ThrowObjectType) {
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    UITouch *anyTouch = [touches anyObject];
     switch (self.state) {
         case PL1FastFoodGameStateReadyToThrow:{
-            UITouch *anyTouch = [touches anyObject];
             CGPoint touchCoordinate = [anyTouch locationInNode:self];
             //Проверим попали ли мы в наш обьект для метания
             if ([self nodeAtPoint:touchCoordinate] == self.nodeToThrow){
                 self.startDragPosition = touchCoordinate;
                 self.state = PL1FastFoodGameStateDragging;
             }
+            break;
+        case PL1FastFoodGameStateThrowing:{
+            CGPoint touchCoordinate = [anyTouch locationInNode:self];
+            if (self.throwType == PL1ThrowObjectTypeShake){
+                CGVector direction = CGVectorMake(touchCoordinate.x - self.nodeToThrow.position.x,
+                                                  touchCoordinate.y - self.nodeToThrow.position.y);
+                [self throwMilkFromShaker:self.bodyToThrow.node
+                              todirection:direction];
+            }
+        }
         }break;
-            
         default:
             break;
     }
@@ -119,7 +134,8 @@ typedef NS_ENUM(NSInteger, PL1ThrowObjectType) {
     switch (self.state) {
         case PL1FastFoodGameStateDragging:{
             CGVector result = CGVectorMake(self.startDragPosition.x - self.nodeToThrow.position.x ,self.startDragPosition.y - self.nodeToThrow.position.y);
-            self.state = PL1FastFoodGameStateWaitingForRest;
+
+            self.state = PL1FastFoodGameStateThrowing;
             [self throwNode:self.nodeToThrow withDirection:result];
         }
         break;
@@ -166,6 +182,7 @@ typedef NS_ENUM(NSInteger, PL1ThrowObjectType) {
             }
         }break;
             
+            
         default:
             break;
     }
@@ -173,12 +190,39 @@ typedef NS_ENUM(NSInteger, PL1ThrowObjectType) {
 
 #pragma mark - Game Mechanics
 
+- (void)throwMilkFromShaker:(SKNode *)node todirection:(CGVector)direction
+{
+    SKEmitterNode *emitter = [self emitterNodeWithName:@"shake" emittingDuration:2];
+
+    [self addChild:emitter];
+    
+    emitter.position = self.nodeToThrow.position;
+    emitter.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:5];
+    emitter.physicsBody.contactTestBitMask = 0;
+    emitter.physicsBody.categoryBitMask    = 1 << 1;
+    emitter.physicsBody.collisionBitMask   = 0;
+    emitter.physicsBody.affectedByGravity  = 0;
+    
+    CGFloat multilplyer = 0.004;
+    direction = CGVectorMake(direction.dx * multilplyer, direction.dy * multilplyer);
+    [emitter.physicsBody applyForce:CGVectorMake(0, -1)];
+    [emitter.physicsBody applyImpulse:direction];
+}
+
 - (void)throwNode:(SKNode *)aNode withDirection:(CGVector)direction
 {
     self.nodeToThrow.physicsBody = self.bodyToThrow;
+    self.bodyToThrow = nil;
     CGFloat multilplyer = 0.4;
     direction = CGVectorMake(direction.dx * multilplyer, direction.dy * multilplyer);
     [self.nodeToThrow.physicsBody applyImpulse:direction];
+    
+    SKAction *action = [SKAction waitForDuration:2];
+    self.state = PL1FastFoodGameStateThrowing;
+    [self runAction:action
+         completion:^{
+             self.state = PL1FastFoodGameStateWaitingForRest;
+         }];
 }
 
 - (void)detonateMeatBall:(SKNode *)ball
@@ -187,9 +231,11 @@ typedef NS_ENUM(NSInteger, PL1ThrowObjectType) {
     denotator.position = ball.position;
     [self addChild:denotator];
 
+    self.state = PL1FastFoodGameStateInitial;
     [ball runAction:[SKAction scaleBy:4 duration:0.5] completion:^{
+        [self performSelector:@selector(updateState) withObject:nil afterDelay:0.5];
         [ball runAction:[SKAction removeFromParent]];
-    }];
+        }];
 }
 
 //duration - время извержения, до того, как частицы не закончат извергаться, после чего
@@ -227,9 +273,16 @@ typedef NS_ENUM(NSInteger, PL1ThrowObjectType) {
 
 - (SKNode *)nextObjectToThrow
 {
-    SKNode *meatBall = [self childNodeWithName:@"meatball"];
+    SKNode *meatBall = nil;
+//    meatBall =  [self childNodeWithName:@"meatball"];
+//    self.throwType = PL1ThrowObjectTypeMeatBall;
+
+    if (!meatBall){
+        meatBall = [self childNodeWithName:@"shake"];
+        meatBall.physicsBody.collisionBitMask = 1;
+        self.throwType = PL1ThrowObjectTypeShake;
+    }
     NSAssert(meatBall,@"Not found object to throw");
-    self.throwType = PL1ThrowObjectTypeMeatBall;
     
     return meatBall;
 }

@@ -18,6 +18,9 @@
 		4F021F6B1B8997A200DAD3EA /* PL1FastFoodGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F021F6A1B8997A200DAD3EA /* PL1FastFoodGameScene.m */; };
 		4F4E76711B89F1C500EABFE3 /* MeatBallDetonation.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4F4E766F1B89F1C500EABFE3 /* MeatBallDetonation.sks */; };
 		4F4E76721B89F1C500EABFE3 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F4E76701B89F1C500EABFE3 /* spark.png */; };
+		4F7CF7A31B8A00B000EECCEC /* Aqua Teen Hunger Force.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4F7CF7A21B8A00B000EECCEC /* Aqua Teen Hunger Force.mp3 */; };
+		4F7CF7A61B8A01DF00EECCEC /* SKAction+SoundFilePlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F7CF7A51B8A01DF00EECCEC /* SKAction+SoundFilePlay.m */; };
+		4FD6CFC71B8A06B400C78C76 /* shake.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4FD6CFC61B8A06B400C78C76 /* shake.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +52,10 @@
 		4F021F6A1B8997A200DAD3EA /* PL1FastFoodGameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PL1FastFoodGameScene.m; sourceTree = "<group>"; };
 		4F4E766F1B89F1C500EABFE3 /* MeatBallDetonation.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MeatBallDetonation.sks; sourceTree = "<group>"; };
 		4F4E76701B89F1C500EABFE3 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
+		4F7CF7A21B8A00B000EECCEC /* Aqua Teen Hunger Force.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Aqua Teen Hunger Force.mp3"; sourceTree = "<group>"; };
+		4F7CF7A41B8A01DF00EECCEC /* SKAction+SoundFilePlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKAction+SoundFilePlay.h"; sourceTree = "<group>"; };
+		4F7CF7A51B8A01DF00EECCEC /* SKAction+SoundFilePlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKAction+SoundFilePlay.m"; sourceTree = "<group>"; };
+		4FD6CFC61B8A06B400C78C76 /* shake.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = shake.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,11 +97,14 @@
 		4F021F3B1B89933200DAD3EA /* FastFoodIsEvil */ = {
 			isa = PBXGroup;
 			children = (
+				4FD6CFC61B8A06B400C78C76 /* shake.sks */,
 				4F021F401B89933200DAD3EA /* AppDelegate.h */,
 				4F021F411B89933200DAD3EA /* AppDelegate.m */,
 				4F021F671B89958300DAD3EA /* Level1.sks */,
 				4F021F691B8997A200DAD3EA /* PL1FastFoodGameScene.h */,
 				4F021F6A1B8997A200DAD3EA /* PL1FastFoodGameScene.m */,
+				4F7CF7A41B8A01DF00EECCEC /* SKAction+SoundFilePlay.h */,
+				4F7CF7A51B8A01DF00EECCEC /* SKAction+SoundFilePlay.m */,
 				4F021F481B89933200DAD3EA /* GameViewController.h */,
 				4F021F491B89933200DAD3EA /* GameViewController.m */,
 				4F021F4B1B89933200DAD3EA /* Main.storyboard */,
@@ -110,6 +120,7 @@
 		4F021F3C1B89933200DAD3EA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4F7CF7A21B8A00B000EECCEC /* Aqua Teen Hunger Force.mp3 */,
 				4F021F3D1B89933200DAD3EA /* Info.plist */,
 				4F021F3E1B89933200DAD3EA /* main.m */,
 			);
@@ -216,6 +227,8 @@
 				4F4E76711B89F1C500EABFE3 /* MeatBallDetonation.sks in Resources */,
 				4F4E76721B89F1C500EABFE3 /* spark.png in Resources */,
 				4F021F521B89933200DAD3EA /* LaunchScreen.xib in Resources */,
+				4F7CF7A31B8A00B000EECCEC /* Aqua Teen Hunger Force.mp3 in Resources */,
+				4FD6CFC71B8A06B400C78C76 /* shake.sks in Resources */,
 				4F021F4F1B89933200DAD3EA /* Images.xcassets in Resources */,
 				4F021F4D1B89933200DAD3EA /* Main.storyboard in Resources */,
 				4F021F681B89958300DAD3EA /* Level1.sks in Resources */,
@@ -240,6 +253,7 @@
 				4F021F4A1B89933200DAD3EA /* GameViewController.m in Sources */,
 				4F021F421B89933200DAD3EA /* AppDelegate.m in Sources */,
 				4F021F3F1B89933200DAD3EA /* main.m in Sources */,
+				4F7CF7A61B8A01DF00EECCEC /* SKAction+SoundFilePlay.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
