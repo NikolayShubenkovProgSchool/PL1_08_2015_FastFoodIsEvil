@@ -12,7 +12,8 @@ typedef NS_ENUM(NSInteger, PL1FastFoodGameState) {
     PL1FastFoodGameStateInitial,
     PL1FastFoodGameStateReadyToThrow,
     PL1FastFoodGameStateDragging,
-    PL1FastFoodGameStateThrowing
+    PL1FastFoodGameStateWaitingForRest,//дождемся, когда состояние нода перейдет в состояние покоя
+    PL1FastFoodGameStateRemovingLastThrownObject
 };
 
 typedef NS_ENUM(NSInteger, PL1ThrowObjectType) {
@@ -118,10 +119,52 @@ typedef NS_ENUM(NSInteger, PL1ThrowObjectType) {
     switch (self.state) {
         case PL1FastFoodGameStateDragging:{
             CGVector result = CGVectorMake(self.startDragPosition.x - self.nodeToThrow.position.x ,self.startDragPosition.y - self.nodeToThrow.position.y);
-            self.state = PL1FastFoodGameStateThrowing;
+            self.state = PL1FastFoodGameStateWaitingForRest;
             [self throwNode:self.nodeToThrow withDirection:result];
         }
         break;
+            
+        default:
+            break;
+    }
+}
+#pragma mark - Super
+
+- (void)didSimulatePhysics
+{
+    switch (self.state) {
+            //
+        case PL1FastFoodGameStateWaitingForRest:{
+            if (fabs(self.nodeToThrow.physicsBody.velocity.dx) < 0.01 &&
+                fabs(self.nodeToThrow.physicsBody.velocity.dy) < 0.01 &&
+                fabs(self.nodeToThrow.physicsBody.angularVelocity) < 0.01 ){
+                
+                switch (self.throwType) {
+                    case PL1ThrowObjectTypeMeatBall:{
+                        //переходим в состояние, когда нам осталось убрать последний объект,
+                        //который мы метали
+                        self.state = PL1FastFoodGameStateRemovingLastThrownObject;
+                        
+                        SKAction *fadeOut = [SKAction fadeAlphaTo:0.4 duration:0.25];
+                        SKAction *fadeIn  = [SKAction fadeAlphaTo:1 duration:0.25];
+                        SKAction *wait    = [SKAction waitForDuration:0.2];
+                        
+                        SKAction *blinkAndDetonate = [SKAction sequence:@[fadeOut,fadeIn,wait,
+                                                                          fadeOut,fadeIn,wait,
+                                                                          fadeOut,fadeIn]];
+                        [self.nodeToThrow runAction:blinkAndDetonate
+                                         completion:^{
+                                             [self detonateMeatBall:self.nodeToThrow];
+                                         }];
+                    }
+                    break;
+                        
+                    default:
+                        break;
+                }
+                
+            }
+        }break;
             
         default:
             break;
@@ -136,33 +179,38 @@ typedef NS_ENUM(NSInteger, PL1ThrowObjectType) {
     CGFloat multilplyer = 0.4;
     direction = CGVectorMake(direction.dx * multilplyer, direction.dy * multilplyer);
     [self.nodeToThrow.physicsBody applyImpulse:direction];
-
-    switch (self.throwType) {
-        case PL1ThrowObjectTypeMeatBall:{
-            SKAction *fadeOut = [SKAction fadeAlphaTo:0.4 duration:0.25];
-            SKAction *fadeIn  = [SKAction fadeAlphaTo:1 duration:0.25];
-            SKAction *wait    = [SKAction waitForDuration:0.2];
-            
-            SKAction *blinkAndDetonate = [SKAction sequence:@[fadeOut,fadeIn,wait,
-                                                              fadeOut,fadeIn,wait,
-                                                              fadeOut,fadeIn]];
-            [self.nodeToThrow runAction:blinkAndDetonate
-                             completion:^{
-                [self detonateMeatBall:self.nodeToThrow];
-            }];
-            
-        }break;
-            
-        default:
-            break;
-    }
 }
 
 - (void)detonateMeatBall:(SKNode *)ball
 {
+    SKEmitterNode *denotator = [self emitterNodeWithName:@"MeatBallDetonation" emittingDuration:0.1];
+    denotator.position = ball.position;
+    [self addChild:denotator];
+
     [ball runAction:[SKAction scaleBy:4 duration:0.5] completion:^{
         [ball runAction:[SKAction removeFromParent]];
     }];
+}
+
+//duration - время извержения, до того, как частицы не закончат извергаться, после чего
+//емиттер дождется их завершения извержения и удалится со сцены
+- (SKEmitterNode *)emitterNodeWithName:(NSString *)name emittingDuration:(NSTimeInterval)duration
+{
+    SKEmitterNode *aNode = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:name
+                                                                                                      ofType:@"sks"]];
+    
+    aNode.targetNode = self;
+    
+    aNode.numParticlesToEmit = duration * aNode.particleBirthRate;
+    
+    NSTimeInterval timeInterval = duration + aNode.particleLifetime + aNode.particleLifetimeRange / 2;
+    
+    [aNode runAction:[SKAction sequence:@[
+                                          [SKAction waitForDuration:timeInterval],
+                                          [SKAction removeFromParent]
+                                          ]
+                      ]];
+    return aNode;
 }
 
 - (void)putNodeToBallPosition:(SKNode *)aNode

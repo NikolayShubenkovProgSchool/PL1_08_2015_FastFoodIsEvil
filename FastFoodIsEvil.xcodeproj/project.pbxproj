@@ -16,6 +16,8 @@
 		4F021F5E1B89933200DAD3EA /* FastFoodIsEvilTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F021F5D1B89933200DAD3EA /* FastFoodIsEvilTests.m */; };
 		4F021F681B89958300DAD3EA /* Level1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4F021F671B89958300DAD3EA /* Level1.sks */; };
 		4F021F6B1B8997A200DAD3EA /* PL1FastFoodGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F021F6A1B8997A200DAD3EA /* PL1FastFoodGameScene.m */; };
+		4F4E76711B89F1C500EABFE3 /* MeatBallDetonation.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4F4E766F1B89F1C500EABFE3 /* MeatBallDetonation.sks */; };
+		4F4E76721B89F1C500EABFE3 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F4E76701B89F1C500EABFE3 /* spark.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +47,8 @@
 		4F021F671B89958300DAD3EA /* Level1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level1.sks; sourceTree = "<group>"; };
 		4F021F691B8997A200DAD3EA /* PL1FastFoodGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PL1FastFoodGameScene.h; sourceTree = "<group>"; };
 		4F021F6A1B8997A200DAD3EA /* PL1FastFoodGameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PL1FastFoodGameScene.m; sourceTree = "<group>"; };
+		4F4E766F1B89F1C500EABFE3 /* MeatBallDetonation.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MeatBallDetonation.sks; sourceTree = "<group>"; };
+		4F4E76701B89F1C500EABFE3 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +101,8 @@
 				4F021F4E1B89933200DAD3EA /* Images.xcassets */,
 				4F021F501B89933200DAD3EA /* LaunchScreen.xib */,
 				4F021F3C1B89933200DAD3EA /* Supporting Files */,
+				4F4E766F1B89F1C500EABFE3 /* MeatBallDetonation.sks */,
+				4F4E76701B89F1C500EABFE3 /* spark.png */,
 			);
 			path = FastFoodIsEvil;
 			sourceTree = "<group>";
@@ -207,6 +213,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F4E76711B89F1C500EABFE3 /* MeatBallDetonation.sks in Resources */,
+				4F4E76721B89F1C500EABFE3 /* spark.png in Resources */,
 				4F021F521B89933200DAD3EA /* LaunchScreen.xib in Resources */,
 				4F021F4F1B89933200DAD3EA /* Images.xcassets in Resources */,
 				4F021F4D1B89933200DAD3EA /* Main.storyboard in Resources */,
