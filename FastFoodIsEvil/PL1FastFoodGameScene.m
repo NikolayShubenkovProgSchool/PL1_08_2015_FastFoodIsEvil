@@ -15,10 +15,16 @@ typedef NS_ENUM(NSInteger, PL1FastFoodGameState) {
     PL1FastFoodGameStateThrowing
 };
 
+typedef NS_ENUM(NSInteger, PL1ThrowObjectType) {
+    PL1ThrowObjectTypeNothing,
+    PL1ThrowObjectTypeMeatBall
+};
+
 @interface PL1FastFoodGameScene ()
 
 @property (nonatomic) BOOL didInitContent;
 @property (nonatomic) PL1FastFoodGameState state;
+@property (nonatomic) PL1ThrowObjectType throwType;
 @property (nonatomic, strong) SKPhysicsBody *bodyToThrow;
 @property (nonatomic, weak) SKNode *nodeToThrow;
 @property (nonatomic) CGPoint startDragPosition;
@@ -49,7 +55,6 @@ typedef NS_ENUM(NSInteger, PL1FastFoodGameState) {
     border.restitution    = 1;
     
     aNode.physicsBody = border;
-//    self.physicsBody = border;
     [self runAction:[SKAction waitForDuration:1] completion:^{
         self.didInitContent = YES;
         [self updateState];
@@ -123,7 +128,6 @@ typedef NS_ENUM(NSInteger, PL1FastFoodGameState) {
     }
 }
 
-
 #pragma mark - Game Mechanics
 
 - (void)throwNode:(SKNode *)aNode withDirection:(CGVector)direction
@@ -132,6 +136,33 @@ typedef NS_ENUM(NSInteger, PL1FastFoodGameState) {
     CGFloat multilplyer = 0.4;
     direction = CGVectorMake(direction.dx * multilplyer, direction.dy * multilplyer);
     [self.nodeToThrow.physicsBody applyImpulse:direction];
+
+    switch (self.throwType) {
+        case PL1ThrowObjectTypeMeatBall:{
+            SKAction *fadeOut = [SKAction fadeAlphaTo:0.4 duration:0.25];
+            SKAction *fadeIn  = [SKAction fadeAlphaTo:1 duration:0.25];
+            SKAction *wait    = [SKAction waitForDuration:0.2];
+            
+            SKAction *blinkAndDetonate = [SKAction sequence:@[fadeOut,fadeIn,wait,
+                                                              fadeOut,fadeIn,wait,
+                                                              fadeOut,fadeIn]];
+            [self.nodeToThrow runAction:blinkAndDetonate
+                             completion:^{
+                [self detonateMeatBall:self.nodeToThrow];
+            }];
+            
+        }break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)detonateMeatBall:(SKNode *)ball
+{
+    [ball runAction:[SKAction scaleBy:4 duration:0.5] completion:^{
+        [ball runAction:[SKAction removeFromParent]];
+    }];
 }
 
 - (void)putNodeToBallPosition:(SKNode *)aNode
@@ -150,7 +181,8 @@ typedef NS_ENUM(NSInteger, PL1FastFoodGameState) {
 {
     SKNode *meatBall = [self childNodeWithName:@"meatball"];
     NSAssert(meatBall,@"Not found object to throw");
-
+    self.throwType = PL1ThrowObjectTypeMeatBall;
+    
     return meatBall;
 }
 
