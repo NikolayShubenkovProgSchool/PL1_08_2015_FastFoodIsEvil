@@ -7,7 +7,7 @@
 //
 
 #import "GameViewController.h"
-#import "GameScene.h"
+
 
 @implementation SKScene (Unarchive)
 
@@ -43,7 +43,7 @@
     /* Sprite Kit applies additional optimizations to improve rendering performance */
     
     // Create and configure the scene.
-    GameScene *scene = [GameScene unarchiveFromFile:@"Level1"];
+    SKScene *scene = [SKScene unarchiveFromFile:@"Level1"];
     scene.scaleMode = SKSceneScaleModeAspectFill;
     
     // Present the scene.
