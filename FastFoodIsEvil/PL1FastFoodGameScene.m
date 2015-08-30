@@ -45,8 +45,12 @@ typedef NS_ENUM(NSInteger, PL1ThrowObjectType) {
     if (self.didInitContent == NO){
         [self initContent];
     }
-    [SKAction pl1_playSoundFileNamed:@"Aqua Teen Hunger Force.mp3"  atVolume:1
-                   waitForCompletion:YES];
+    self.physicsWorld.speed = 0.25;
+    
+    SKAction *letMusicLiveForeverAction = [SKAction repeatActionForever:[SKAction pl1_playSoundFileNamed:@"Aqua Teen Hunger Force.mp3"
+                                                                                                atVolume:0.5
+                                                                                       waitForCompletion:YES]];
+    [self runAction:letMusicLiveForeverAction withKey:@"backgroundMusic"];
 }
 
 - (void)initContent
@@ -201,6 +205,8 @@ typedef NS_ENUM(NSInteger, PL1ThrowObjectType) {
 
     [self addChild:emitter];
     
+    [self runAction:[SKAction pl1_playSoundFileNamed:@"lazer.mp3" atVolume:1 waitForCompletion:YES]];
+    
     emitter.position = self.nodeToThrow.position;
     emitter.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:5];
     emitter.physicsBody.contactTestBitMask = 0;
@@ -237,6 +243,7 @@ typedef NS_ENUM(NSInteger, PL1ThrowObjectType) {
     [self addChild:denotator];
 
     self.state = PL1FastFoodGameStateInitial;
+    [ball runAction:[SKAction pl1_playSoundFileNamed:@"bomb.mp3" atVolume:1 waitForCompletion:YES]];
     [ball runAction:[SKAction scaleBy:4 duration:0.5] completion:^{
         [self performSelector:@selector(updateState) withObject:nil afterDelay:0.5];
         [ball runAction:[SKAction removeFromParent]];

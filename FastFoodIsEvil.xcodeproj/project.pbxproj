@@ -16,11 +16,13 @@
 		4F021F5E1B89933200DAD3EA /* FastFoodIsEvilTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F021F5D1B89933200DAD3EA /* FastFoodIsEvilTests.m */; };
 		4F021F681B89958300DAD3EA /* Level1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4F021F671B89958300DAD3EA /* Level1.sks */; };
 		4F021F6B1B8997A200DAD3EA /* PL1FastFoodGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F021F6A1B8997A200DAD3EA /* PL1FastFoodGameScene.m */; };
+		4F0A46191B939ADE00857519 /* lazer.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4F0A46181B939ADE00857519 /* lazer.mp3 */; };
 		4F4E76711B89F1C500EABFE3 /* MeatBallDetonation.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4F4E766F1B89F1C500EABFE3 /* MeatBallDetonation.sks */; };
 		4F4E76721B89F1C500EABFE3 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F4E76701B89F1C500EABFE3 /* spark.png */; };
 		4F7CF7A31B8A00B000EECCEC /* Aqua Teen Hunger Force.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4F7CF7A21B8A00B000EECCEC /* Aqua Teen Hunger Force.mp3 */; };
 		4F7CF7A61B8A01DF00EECCEC /* SKAction+SoundFilePlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F7CF7A51B8A01DF00EECCEC /* SKAction+SoundFilePlay.m */; };
 		4FD6CFC71B8A06B400C78C76 /* shake.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4FD6CFC61B8A06B400C78C76 /* shake.sks */; };
+		4FEB15AB1B93970F00905F4A /* bomb.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4FEB15AA1B93970F00905F4A /* bomb.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,12 +52,14 @@
 		4F021F671B89958300DAD3EA /* Level1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level1.sks; sourceTree = "<group>"; };
 		4F021F691B8997A200DAD3EA /* PL1FastFoodGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PL1FastFoodGameScene.h; sourceTree = "<group>"; };
 		4F021F6A1B8997A200DAD3EA /* PL1FastFoodGameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PL1FastFoodGameScene.m; sourceTree = "<group>"; };
+		4F0A46181B939ADE00857519 /* lazer.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = lazer.mp3; sourceTree = "<group>"; };
 		4F4E766F1B89F1C500EABFE3 /* MeatBallDetonation.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MeatBallDetonation.sks; sourceTree = "<group>"; };
 		4F4E76701B89F1C500EABFE3 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		4F7CF7A21B8A00B000EECCEC /* Aqua Teen Hunger Force.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Aqua Teen Hunger Force.mp3"; sourceTree = "<group>"; };
 		4F7CF7A41B8A01DF00EECCEC /* SKAction+SoundFilePlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKAction+SoundFilePlay.h"; sourceTree = "<group>"; };
 		4F7CF7A51B8A01DF00EECCEC /* SKAction+SoundFilePlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKAction+SoundFilePlay.m"; sourceTree = "<group>"; };
 		4FD6CFC61B8A06B400C78C76 /* shake.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = shake.sks; sourceTree = "<group>"; };
+		4FEB15AA1B93970F00905F4A /* bomb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bomb.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +124,8 @@
 		4F021F3C1B89933200DAD3EA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4F0A46181B939ADE00857519 /* lazer.mp3 */,
+				4FEB15AA1B93970F00905F4A /* bomb.mp3 */,
 				4F7CF7A21B8A00B000EECCEC /* Aqua Teen Hunger Force.mp3 */,
 				4F021F3D1B89933200DAD3EA /* Info.plist */,
 				4F021F3E1B89933200DAD3EA /* main.m */,
@@ -226,12 +232,14 @@
 			files = (
 				4F4E76711B89F1C500EABFE3 /* MeatBallDetonation.sks in Resources */,
 				4F4E76721B89F1C500EABFE3 /* spark.png in Resources */,
+				4FEB15AB1B93970F00905F4A /* bomb.mp3 in Resources */,
 				4F021F521B89933200DAD3EA /* LaunchScreen.xib in Resources */,
 				4F7CF7A31B8A00B000EECCEC /* Aqua Teen Hunger Force.mp3 in Resources */,
 				4FD6CFC71B8A06B400C78C76 /* shake.sks in Resources */,
 				4F021F4F1B89933200DAD3EA /* Images.xcassets in Resources */,
 				4F021F4D1B89933200DAD3EA /* Main.storyboard in Resources */,
 				4F021F681B89958300DAD3EA /* Level1.sks in Resources */,
+				4F0A46191B939ADE00857519 /* lazer.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
